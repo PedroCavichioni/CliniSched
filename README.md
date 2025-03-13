@@ -1,4 +1,4 @@
-# 🏥 Sistema de Agendamentos para Clínicas
+# 🏥 CliniSched
 
 ## 📌 Sobre o Projeto
 O **CliniSched** é uma aplicação desenvolvida com **Spring Boot** e **MongoDB**, permitindo o cadastro de médicos e pacientes, gerenciamento de consultas, envio de lembretes automáticos e armazenamento de histórico de consultas.
