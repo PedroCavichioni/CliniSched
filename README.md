@@ -18,7 +18,7 @@ O **CliniSched** é uma aplicação desenvolvida com **Spring Boot** e **MongoDB
 <br>
 ✅ Agendamento de consultas
 <br>
-✅ Listagem de consultas por paciente ou médico
+✅ Listagem de consultas por paciente e médico
 <br>
 ✅ Envio de lembretes automáticos por e-mail e WhatsApp
 <br>
