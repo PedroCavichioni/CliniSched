@@ -34,7 +34,7 @@ O **CliniSched** é uma aplicação desenvolvida com **Spring Boot** e **MongoDB
 
 ### 🔹 Clonar o Repositório
 ```bash
-  git clone https://github.com/seu-usuario/CliniSched.git
+  git clone https://github.com/PedroCavichioni/CliniSched.git
   cd CliniSched
 ```
 
