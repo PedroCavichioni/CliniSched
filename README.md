@@ -8,7 +8,6 @@ O **CliniSched** é uma aplicação desenvolvida com **Spring Boot** e **MongoDB
 - **Spring Boot**
 - **MongoDB**
 - **Spring Data MongoDB**
-- **Spring Security + JWT (Autenticação e Autorizacão)**
 - **Spring Mail (Envio de e-mails)**
 - **Twilio API (WhatsApp Notifications)**
 - **Lombok**
