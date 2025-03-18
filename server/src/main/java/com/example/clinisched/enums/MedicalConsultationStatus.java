@@ -1,9 +1,9 @@
 package com.example.clinisched.enums;
 
 public enum MedicalConsultationStatus {
-    PENDING_PAYMENT(0, "CANCELED"),
-    PROCESSING(1, "SCHEDULED"),
-    SHIPPED(2, "FINISHED");
+    CANCELED(0, "CANCELED"),
+    SCHEDULED(1, "SCHEDULED"),
+    FINISHED(2, "FINISHED");
 
     private final int code;
     private final String description;
