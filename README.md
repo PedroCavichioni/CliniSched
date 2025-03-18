@@ -4,7 +4,7 @@
 O **CliniSched** é uma aplicação de gerenciamento de consultas médicas desenvolvida com **Spring Boot** e **PostgreSQL**, permitindo o cadastro de médicos e pacientes, gerenciamento de consultas, envio de lembretes automáticos e armazenamento de histórico de consultas.
 
 ## 🚀 Tecnologias Utilizadas
-- **Java 17**
+- **Java 23**
 - **Spring Boot 3+**
 - **PostgreSQL**
 - **Spring Data JPA**
