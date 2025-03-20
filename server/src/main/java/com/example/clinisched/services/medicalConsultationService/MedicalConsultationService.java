@@ -1,10 +1,12 @@
 package com.example.clinisched.services.medicalConsultationService;
 
-import com.example.clinisched.exception.NotFoundException;
+import com.example.clinisched.dto.medicalConsultationDTO.MedicalConsultationRequestDTO;
+import com.example.clinisched.dto.medicalConsultationDTO.MedicalConsultationResponseDTO;
 import com.example.clinisched.models.medicalConsultationModel.MedicalConsultationModel;
 import com.example.clinisched.repositories.medicalConsultationRepository.MedicalConsultationRepository;
 import com.example.clinisched.services.emailService.EmailService;
 import jakarta.mail.MessagingException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MedicalConsultationService {
@@ -30,13 +33,31 @@ public class MedicalConsultationService {
         return medicalConsultationRepository.findAll();
     }
 
-    public MedicalConsultationModel getById(Long id){
-        return medicalConsultationRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException(id));
+    public MedicalConsultationResponseDTO getById(Long id){
+        MedicalConsultationModel medicalConsultationModel = medicalConsultationRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Medical Consultation with ID " + id + " not found!"));
+        return new MedicalConsultationResponseDTO(medicalConsultationModel);
     }
 
-    public MedicalConsultationModel post(MedicalConsultationModel medicalConsultationModel){
-        return medicalConsultationRepository.save(medicalConsultationModel);
+    public MedicalConsultationModel post(MedicalConsultationRequestDTO medicalConsultationRequestDTO){
+        try{
+            MedicalConsultationModel medicalConsultationModel = new MedicalConsultationModel(medicalConsultationRequestDTO);
+            return medicalConsultationRepository.save(medicalConsultationModel);
+        } catch (Exception e){
+            throw new RuntimeException("Error to save medical consultation. Try again later!");
+        }
+    }
+
+    public MedicalConsultationModel update(Long id, MedicalConsultationRequestDTO medicalConsultationRequestDTO){
+        MedicalConsultationModel existingMedicalConsultation = medicalConsultationRepository.findById(medicalConsultationRequestDTO.getId())
+                .orElseThrow(() ->new EntityNotFoundException("Medical Consultation with ID " + id + " not found!"));
+
+        existingMedicalConsultation.setDate_consultation(existingMedicalConsultation.getDate_consultation());
+        existingMedicalConsultation.setStatus(existingMedicalConsultation.getStatus());
+        existingMedicalConsultation.setDoctor(existingMedicalConsultation.getDoctor());
+        existingMedicalConsultation.setPatient(existingMedicalConsultation.getPatient());
+
+        return medicalConsultationRepository.save(existingMedicalConsultation);
     }
 
     @Scheduled(cron = "0 0 8 * * ?")
@@ -50,16 +71,22 @@ public class MedicalConsultationService {
 
         List<MedicalConsultationModel> consultations = medicalConsultationRepository.findByDateConsultationBetween(todayStart, todayEnd);
 
-        for(MedicalConsultationModel consultationModel : consultations){
-            String email = consultationModel.getPatient().getEmail();
+        List<MedicalConsultationResponseDTO> consultationResponseDTOS = consultations.stream()
+                .map(MedicalConsultationResponseDTO::new)
+                .collect(Collectors.toList());
+
+        for(MedicalConsultationResponseDTO consultationResponseDTO : consultationResponseDTOS){
+            String email = consultationResponseDTO.getPatientRequestDTO().getEmail();
             String subject = "Lembrete de Consulta Médica";
-            String body = "Olá, " + consultationModel.getPatient().getName() + ",<br><br>" +
-                    "Você tem uma consulta médica hoje às <b>" + consultationModel.getDate_consultation().toLocalTime() + "</b>.<br><br>" +
+            String body = "Olá, " + consultationResponseDTO.getPatientRequestDTO().getName() + ",<br><br>" +
+                    "Você tem uma consulta médica hoje às <b>" + consultationResponseDTO.getDate_consultation().toLocalTime() + "</b>.<br><br>" +
                     "Atenciosamente, <br>CliniSched.";
+
+            System.out.println("Enviando e-mail para: " + email);
             try{
                 emailService.sendEmail(email, subject, body);
             }catch (MessagingException err){
-                System.out.println("Erro ao enviar e-mail para " + email + ": " + err.getMessage());
+                System.out.println("Error to send email " + email + ": " + err.getMessage());
             }
         }
     }
@@ -72,6 +99,9 @@ public class MedicalConsultationService {
     }
 
     public void delete(Long id){
+        if(!medicalConsultationRepository.existsById(id)){
+            throw new EntityNotFoundException("Medical Consultation with ID " + id + " not found!");
+        }
         medicalConsultationRepository.deleteById(id);
     }
 }

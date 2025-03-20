@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface MedicalConsultationRepository extends JpaRepository<MedicalConsultationModel, Long> {
 
-    @Query("SELECT m FROM MedicalConsultationModel m WHERE m.dateConsultation BETWEEN :startDate AND :endDate")
+    @Query("SELECT m FROM MedicalConsultationModel m WHERE m.date_consultation BETWEEN :startDate AND :endDate")
     List<MedicalConsultationModel> findByDateConsultationBetween(
             @Param("startDate") LocalDateTime startDate,
             @Param("endDate") LocalDateTime endDate

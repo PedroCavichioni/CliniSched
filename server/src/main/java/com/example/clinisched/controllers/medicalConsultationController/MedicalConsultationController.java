@@ -1,7 +1,10 @@
 package com.example.clinisched.controllers.medicalConsultationController;
 
+import com.example.clinisched.dto.medicalConsultationDTO.MedicalConsultationRequestDTO;
+import com.example.clinisched.dto.medicalConsultationDTO.MedicalConsultationResponseDTO;
 import com.example.clinisched.models.medicalConsultationModel.MedicalConsultationModel;
 import com.example.clinisched.services.medicalConsultationService.MedicalConsultationService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,8 +24,8 @@ public class MedicalConsultationController {
     }
 
     @GetMapping("/{id}")
-    public MedicalConsultationModel getMedicalConsultationById(@PathVariable Long id){
-        return medicalConsultationService.getById(id);
+    public ResponseEntity<MedicalConsultationResponseDTO> getMedicalConsultationById(@PathVariable Long id){
+        return ResponseEntity.ok(medicalConsultationService.getById(id));
     }
 
     @GetMapping("/medical-consultation-today")
@@ -37,12 +40,18 @@ public class MedicalConsultationController {
     }
 
     @PostMapping
-    public MedicalConsultationModel postMedicalConsultation(@RequestBody MedicalConsultationModel medicalConsultationModel){
-        return medicalConsultationService.post(medicalConsultationModel);
+    public ResponseEntity<MedicalConsultationModel> postMedicalConsultation(@RequestBody MedicalConsultationRequestDTO medicalConsultationRequestDTO){
+        return ResponseEntity.ok(medicalConsultationService.post(medicalConsultationRequestDTO));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<MedicalConsultationModel> updateMedicalConsultation(@PathVariable Long id, @RequestBody MedicalConsultationRequestDTO medicalConsultationRequestDTO){
+        return ResponseEntity.ok(medicalConsultationService.update(id, medicalConsultationRequestDTO));
     }
 
     @DeleteMapping("/{id}")
-    public void deleteMedicalConsultation(@PathVariable Long id){
+    public ResponseEntity<String> deleteMedicalConsultation(@PathVariable Long id){
         medicalConsultationService.delete(id);
+        return ResponseEntity.ok("Medical Consultation deleted with success!");
     }
 }
