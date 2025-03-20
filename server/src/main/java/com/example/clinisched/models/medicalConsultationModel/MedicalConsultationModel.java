@@ -5,6 +5,7 @@ import com.example.clinisched.enums.MedicalConsultationStatus;
 import com.example.clinisched.models.doctorModel.DoctorModel;
 import com.example.clinisched.models.patientModel.PatientModel;
 import com.example.clinisched.utils.attributeConverterUtils.MedicalConsultationStatusConverter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -29,13 +30,15 @@ public class MedicalConsultationModel {
     @Convert(converter = MedicalConsultationStatusConverter.class)
     private MedicalConsultationStatus status;
 
+    @JsonIgnore
     @JsonManagedReference
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "doctor_id")
     private DoctorModel doctor;
 
+    @JsonIgnore
     @JsonManagedReference
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "patient_id")
     private PatientModel patient;
 

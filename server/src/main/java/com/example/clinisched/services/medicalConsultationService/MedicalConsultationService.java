@@ -44,7 +44,7 @@ public class MedicalConsultationService {
             MedicalConsultationModel medicalConsultationModel = new MedicalConsultationModel(medicalConsultationRequestDTO);
             return medicalConsultationRepository.save(medicalConsultationModel);
         } catch (Exception e){
-            throw new RuntimeException("Error to save medical consultation. Try again later!");
+            throw new RuntimeException("Error to save medical consultation. Try again later!" + e);
         }
     }
 
@@ -79,7 +79,9 @@ public class MedicalConsultationService {
             String email = consultationResponseDTO.getPatientRequestDTO().getEmail();
             String subject = "Lembrete de Consulta Médica";
             String body = "Olá, " + consultationResponseDTO.getPatientRequestDTO().getName() + ",<br><br>" +
-                    "Você tem uma consulta médica hoje às <b>" + consultationResponseDTO.getDate_consultation().toLocalTime() + "</b>.<br><br>" +
+                    "Você tem uma consulta médica hoje às <b>" + consultationResponseDTO.getDate_consultation().toLocalTime() + "</b> com "
+                    + consultationResponseDTO.getDoctorRequestDTO().getName()
+                    + " - " + consultationResponseDTO.getDoctorRequestDTO().getSpecialty() + "<br><br>" +
                     "Atenciosamente, <br>CliniSched.";
 
             System.out.println("Enviando e-mail para: " + email);
