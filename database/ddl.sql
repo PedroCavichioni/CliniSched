@@ -15,7 +15,7 @@ CREATE TABLE doctor (
 CREATE TABLE medical_consultation (
     id SERIAL PRIMARY KEY,
     date_consultation TIMESTAMP WITHOUT TIME ZONE NOT NULL,
-    status INTEGER CHECK (status IN (0, 1, 2)) NOT NULL,
+    status VARCHAR(20) NOT NULL CHECK (status IN ('CANCELED', 'SCHEDULED', 'FINISHED')),
     doctor_id INTEGER,
     patient_id INTEGER,
     FOREIGN KEY (doctor_id) REFERENCES doctor(id) ON DELETE SET NULL,
