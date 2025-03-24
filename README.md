@@ -9,15 +9,14 @@ O **CliniSched** é uma aplicação de gerenciamento de consultas médicas desen
 - **PostgreSQL**
 - **Spring Data JPA**
 - **Spring Mail (Envio de e-mails)**
-- **Twilio API (WhatsApp Notifications)**
 - **Lombok**
 - **Swagger (Documentação da API)**
 
 ## 🛠️ Funcionalidades
 ✅ Cadastro de médicos e pacientes
 ✅ Agendamento de consultas
-✅ Listagem de consultas por paciente ou médico
-✅ Envio de lembretes automáticos por e-mail e WhatsApp
+✅ Listagem de consultas
+✅ Envio de lembretes por e-mail
 ✅ Registro de histórico de consultas
 
 ## 🛠️ Configuração do Projeto
@@ -39,14 +38,9 @@ Crie um arquivo **.env** na raiz do projeto e adicione:
 SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/clinicaDB
 SPRING_DATASOURCE_USERNAME=seu_usuario
 SPRING_DATASOURCE_PASSWORD=sua_senha
-SPRING_JPA_HIBERNATE_DDL-AUTO=update
-JWT_SECRET=seu-segredo
 EMAIL_HOST=smtp.seuprovedor.com
-EMAIL_USER=seuemail@email.com
-EMAIL_PASS=sua-senha
-TWILIO_ACCOUNT_SID=seu-sid
-TWILIO_AUTH_TOKEN=seu-token
-TWILIO_WHATSAPP_NUMBER=+1234567890
+EMAIL_USERNAME=seuemail@email.com
+EMAIL_PASSWORD=sua-senha
 ```
 
 ### 🔹 Executar o Projeto
