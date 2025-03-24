@@ -30,11 +30,13 @@ public class MedicalConsultationModel {
     @Convert(converter = MedicalConsultationStatusConverter.class)
     private MedicalConsultationStatus status;
 
+    @JsonIgnore
     @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "doctor_id")
     private DoctorModel doctor;
 
+    @JsonIgnore
     @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "patient_id")
