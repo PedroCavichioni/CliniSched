@@ -10,7 +10,6 @@ O **CliniSched** é uma aplicação de gerenciamento de consultas médicas desen
 - **Spring Data JPA**
 - **Spring Mail (Envio de e-mails)**
 - **Lombok**
-- **Swagger (Documentação da API)**
 
 ## 🛠️ Funcionalidades
 ✅ Cadastro de médicos e pacientes
@@ -46,11 +45,6 @@ EMAIL_PASSWORD=sua-senha
 ### 🔹 Executar o Projeto
 ```bash
 mvn spring-boot:run
-```
-
-O servidor iniciará na porta **8080**. Acesse a documentação da API:
-```url
-http://localhost:8080/swagger-ui/index.html
 ```
 
 ## 📌 Melhorias Futuras
